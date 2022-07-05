@@ -9,7 +9,7 @@ const productRouter = require('./routes/products');
 const userRouter = require('./routes/user');
 
 // INIT
-const PORT = 3000 // specify port number
+const PORT = process.env.PORT || 3000 // specify port number
 const app = express(); // initialize express
 const DB = "mongodb+srv://rathakrishnan:Amazon123@cluster0.j5oad.mongodb.net/?retryWrites=true&w=majority"
 // Middleware
