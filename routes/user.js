@@ -65,7 +65,7 @@ userRouter.delete("/api/remove-from-cart/:id", auth, async (req, res) => {
 
 
 // Add product to cart
-userRouter.post("/api/save-address", auth, async (req, res) => {
+userRouter.post("/api/save-default-address", auth, async (req, res) => {
   try {
     const { address } = req.body;
     let user = await User.findById(req.user);
@@ -119,6 +119,25 @@ userRouter.get("/api/orders/me", auth, async (req, res) => {
   try {
     const orders = await Order.find({ userId: req.user });
     res.json(orders);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+userRouter.get("/api/orders/products", auth, async (req, res) => {
+  try {
+    const orders = await Order.find({ userId: req.user });
+    let products = [];
+    
+     for (let i = 0; i < orders.length; i++) {
+       for (let j = 0; j < orders[i].products.length; j++) {
+         let product = orders[i].products[j];
+         products.push(product);
+      }
+     }
+    
+    console.log(`check ${products}`);
+    res.json(products);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
