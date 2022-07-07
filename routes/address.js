@@ -16,7 +16,16 @@ addressRouter.get("/api/get-address", auth, async (req, res) => {
 // Add product
 addressRouter.post('/api/add-address', auth, async (req, rest) => {
     try {
-        const { name, mobile, flat, area, pincode, city } = req.body;
+        const { name, mobile, flat, area, pincode, city, isDefault } = req.body;
+
+        if (isDefault == true) {
+            let address = await Address.find({});
+            for (let i = 0; i < address.length; i++){
+                address[i].isDefault = false;
+                 address[i] = await address[i].save();
+            }
+           
+        }
         let address = Address({
             name,
             mobile,
@@ -24,6 +33,7 @@ addressRouter.post('/api/add-address', auth, async (req, rest) => {
             area,
             pincode,
             city,
+            isDefault,
         });
 
         address = await address.save();

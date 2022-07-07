@@ -25,7 +25,11 @@ const addressSchema = mongoose.Schema({
   city: {
     required: true,
     type: String,
-  },
+    },
+    isDefault: {
+        type: Boolean,
+        required: true,
+  }
 });
 
 
