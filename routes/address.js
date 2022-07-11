@@ -43,4 +43,14 @@ addressRouter.post('/api/add-address', auth, async (req, rest) => {
     }
 });
 
+addressRouter.post("/api/delete-address", auth, async (req, res) => {
+    try {
+       let { id } = req.body;
+        const address = await Address.findByIdAndDelete(id);
+    res.json(address);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 module.exports = addressRouter;
